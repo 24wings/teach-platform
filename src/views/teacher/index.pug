@@ -1,13 +1,14 @@
 extends ../layouts/base-layout
 block append content
-
     .container
         h1 教师主页
         .ui.two.column.centered.grid
             .left.floated.twelve.wide.column
-                +tabs(tables,selectedTable)
+                +mediaList(medias)
             .right.floated.left.aligned.four.wide.column
+                +studentCard(student,true)
                 include ../layouts/addArticleCard
                 include ../layouts/createCard
+                +createNote()
 block append script
   script(src='/scripts/index.js')

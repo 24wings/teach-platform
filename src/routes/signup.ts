@@ -1,11 +1,10 @@
 
 import express = require('express');
 import { checkParamsFromBody } from '../middlewares/index';
-import { userModel, IUser, recordModel, IRecord } from '../models';
+import { studentModel, IStudent } from '../models';
+
 import gravatar = require('gravatar');
-
 var router = express.Router();
-
 
 
 router.route('/')
@@ -69,22 +68,31 @@ router.route('/')
             }]
         });
     })
-    .post(checkParamsFromBody('name', 'phone', 'gender', 'age',
-        'signature', 'intersting', 'like', 'movie', 'loveSong', 'god',
-        'book', 'ta', 'words', 'reason',
-        'filterAge', 'filterCity'
-    ),
+    .post(checkParamsFromBody('name', 'password', 'repassword', 'gender', 'email', 'signature', 'job'),
     async (req, res, next) => {
-        var { name, phone, gender, age, signature, intersting, like, movie, loveSong, god, book, ta, words, reason, filterAge, filterCity } = req.body;
-        var user = await new userModel({
-            name, phone, gender, age, signature, intersting, like, movie,
-            loveSong, god, book, ta, words, reason, filterAge, filterCity
-        }).save();
-        var record = await new recordModel({ state: 0, user: user._id }).save();
-        // 创建一条纪录
-        req.session.user = user;
-        res.redirect('/');
+        var { name, repassword, password, gender, email, signature, job } = req.body;
+        if (password != repassword) {
+            res.render('/signup', {
+                error: '密码不一致'
+            })
+        } else {
+            var avatar = gravatar.url(email);
+            var student = await new studentModel({
+                name,
+                avatar,
+                password,
+                gender,
+                email,
+                signature,
+                job
+            }).save();
 
+            // 创建一条纪录
+            req.session.student = student;
+
+            res.redirect('/');
+
+        }
     });
 
 

@@ -14,15 +14,20 @@ router.route('/')
         console.log(req.body)
         var student = await studentModel.findOne({ name, password }).exec();
         if (student) {
-            req.session.student = student;
-            res.redirect('/student/');
+            if (student.job == 'student') {
+                req.session.student = student;
+                res.redirect('/student/');
+            } else {
+                req.session.student = student;
+                res.redirect('/teacher/')
+
+            }
         } else {
             res.render('signin', {
                 error: '用户名或密码错误'
             });
         }
-
-    })
+    });
 
 
 

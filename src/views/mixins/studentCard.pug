@@ -8,7 +8,8 @@ mixin studentCard(student,isLogin)
                         p #{student.name}
                         p.meta  #{student.gender}
                 .description
-                    | #{student.signature}
+                    h3.ui.headrr 职位: #{student.job=='teacher'?'教师':'学生'} 
+                    h4.ui.header 个性签名  #{student.signature}
                 if isLogin
                     .extra.content
                     a 

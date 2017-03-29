@@ -10,7 +10,8 @@ var studentSchema = new mongoose.Schema({
     email: String,
     signature: String,
     createDt: { type: Date, default: Date.now },
-    updateDt: { type: Date, default: Date.now }
+    updateDt: { type: Date, default: Date.now },
+    job: { type: String, required: true }
 });
 
 
@@ -21,6 +22,7 @@ export interface IStudent extends mongoose.Document {
     gender: string;
     email: string;
     signature: string;
+    job: 'student' | 'teacher';
 }
 
 export var studentModel = mongoose.model<IStudent>('Student', studentSchema);

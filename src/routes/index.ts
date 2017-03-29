@@ -1,7 +1,7 @@
 import express = require('express');
 import moment = require('moment');
 
-import { IStudent, studentModel, recordModel, IRecord } from '../models';
+import { IStudent, studentModel } from '../models';
 
 var router = express.Router();
 
@@ -13,7 +13,7 @@ router.route('/')
   }).post(async (req, res, next) => {
     // 默认第一步
     var user = res.locals.user;
-    var record = await recordModel.update({ user: user._id }, { $set: { state: 1 } }).exec();
+
     res.redirect('/');
   })
 

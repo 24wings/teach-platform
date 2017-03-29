@@ -1,0 +1,10 @@
+mixin  mediaList(medias)
+    .ui.bottom.attached.active.tab.segment
+        .ui.list
+            each media in medias
+                .item
+                    a.ui.avatar.image(href='/media/'+media._id) #{media.title}
+                    .content
+                        each url in medial.urls
+                            a.header(href='/media/'+media._id+'/?url='+url)  #{url}
+                .ui.divider

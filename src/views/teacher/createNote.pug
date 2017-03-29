@@ -1,0 +1,30 @@
+extends ../layouts/base-layout
+block append content
+    .container
+        .ui.two.column.centered.grid
+            .left.floated.twelve.wide.column
+                form(method='POST',enctype="multipart/form-data")
+                    .ui.form.segment
+                        h2(style='margin-top:0;') 上传课件
+                        .field.required
+                            label  标题
+                            input(placeholder='标题字数不少于10字',name='title',title='标题不少于10个字')
+                        .field.required
+                            label 课件文件,可上传多个
+                            input(type='file',name='files',multiple='multiple')#files
+                        .field.required
+                            label 文件类型
+                            .ui.selection.dropdown
+                                .default.text pdf
+                                i.dropdown.icon
+                                input(type='hidden',name='mediaType',required='required',value='pdf')
+                                .menu
+                                    .item(data-value='pdf') pdf
+                                    .item(data-value='video') video
+                                    .item(data-value='image') image
+                    input(type='submit',value='发布').ui.button
+            .right.floated.left.aligned.four.wide.column
+                +studentCard(student,true)
+block append script
+    script.
+        $('.ui.dropdown').dropdown();
